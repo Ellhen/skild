@@ -6,6 +6,7 @@ import { dummySkills } from "#/lib/dummy-skills";
 export const Route = createFileRoute("/")({ component: App });
 
 function App() {
+
 	return (
 		<div id="home">
 			<section className="hero">
@@ -21,11 +22,17 @@ function App() {
 					</p>
 				</div>
 				<div className="actions">
-					<Link to="/skills" className="btn-primary">
+					<Link
+						to="/skills"
+						className="btn-primary"
+					>
 						<Terminal size={18} />
 						<span>Browse Registry</span>
 					</Link>
-					<Link to="/skills/new" className="btn-secondary">
+					<Link
+						to="/skills/new"
+						className="btn-secondary"
+					>
 						<Terminal size={18} />
 						Publish Skill
 					</Link>

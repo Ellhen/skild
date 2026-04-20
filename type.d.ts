@@ -1,4 +1,4 @@
-interface SkillRecord {
+export interface SkillRecord {
 	id: string;
 	title: string; // Write Code
     slug: string; // write-code

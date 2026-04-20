@@ -7,6 +7,7 @@ import {
 	Copy,
 	MessageSquare,
 } from "lucide-react";
+import { usePostHog } from "posthog-js/react";
 import { useState } from "react";
 import type { SkillRecord } from "type";
 
@@ -20,16 +21,23 @@ const SkillCard = ({
 	authorEmail,
 }: SkillRecord) => {
 	const [copied, setCopied] = useState(false);
+	const posthog = usePostHog();
 
 	const handleCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(installCommand);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2000);
+			posthog?.capture("install_command_copied", {
+				skill_title: title,
+				skill_category: category,
+				install_command: installCommand,
+			});
 		} catch {
 			setCopied(false);
 		}
 	};
+
 	return (
 		<article className="skill-card">
 			<Link
@@ -58,7 +66,7 @@ const SkillCard = ({
 							<p>Ellhen</p>
 							<p>
 								{createdAt
-									? new Date(createdAt).toLocaleString()
+									? new Date(createdAt).toLocaleDateString()
 									: "Unknown date"}
 							</p>
 						</div>
@@ -80,7 +88,6 @@ const SkillCard = ({
 						<span>{">_"}</span>
 						<p>{installCommand}</p>
 					</div>
-
 					<button
 						type="button"
 						className="copy"
@@ -93,7 +100,7 @@ const SkillCard = ({
 
 				<div className="footer">
 					<div className="stats">
-						<button type="button" className="upvote" dir="">
+						<button type="button" className="upvote" disabled>
 							<ArrowBigUp size={16} fill="currentColor" />
 							<span>{tags.length}</span>
 						</button>
@@ -105,7 +112,17 @@ const SkillCard = ({
 					</div>
 
 					<div className="actions">
-						<Link to="/skills" className="open" title={`Open${title}`}>
+						<Link
+							to="/skills"
+							className="open"
+							title={`Open ${title}`}
+							onClick={() =>
+								posthog?.capture("skill_opened", {
+									skill_title: title,
+									skill_category: category,
+								})
+							}
+						>
 							<span>Open</span>
 							<ArrowUpRight size={14} />
 						</Link>
