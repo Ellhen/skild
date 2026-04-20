@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as _authSignOutSplatRouteImport } from './routes/__auth/sign-out.$'
+import { Route as _authSignInSplatRouteImport } from './routes/__auth/sign-in.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const _authSignOutSplatRoute = _authSignOutSplatRouteImport.update({
+  id: '/__auth/sign-out/$',
+  path: '/sign-out/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const _authSignInSplatRoute = _authSignInSplatRouteImport.update({
+  id: '/__auth/sign-in/$',
+  path: '/sign-in/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sign-in/$': typeof _authSignInSplatRoute
+  '/sign-out/$': typeof _authSignOutSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sign-in/$': typeof _authSignInSplatRoute
+  '/sign-out/$': typeof _authSignOutSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/__auth/sign-in/$': typeof _authSignInSplatRoute
+  '/__auth/sign-out/$': typeof _authSignOutSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/sign-in/$' | '/sign-out/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/sign-in/$' | '/sign-out/$'
+  id: '__root__' | '/' | '/__auth/sign-in/$' | '/__auth/sign-out/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  _authSignInSplatRoute: typeof _authSignInSplatRoute
+  _authSignOutSplatRoute: typeof _authSignOutSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,21 +68,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/__auth/sign-out/$': {
+      id: '/__auth/sign-out/$'
+      path: '/sign-out/$'
+      fullPath: '/sign-out/$'
+      preLoaderRoute: typeof _authSignOutSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/__auth/sign-in/$': {
+      id: '/__auth/sign-in/$'
+      path: '/sign-in/$'
+      fullPath: '/sign-in/$'
+      preLoaderRoute: typeof _authSignInSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  _authSignInSplatRoute: _authSignInSplatRoute,
+  _authSignOutSplatRoute: _authSignOutSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

@@ -1,0 +1,24 @@
+I0420 11:21:19.177063   39359 load.go:31] Reloading schema and connectors...
+I0420 11:21:19.182190   39359 control.go:100] [projects/emulator/locations/emulator/services/skild-83e61-service 3d8b] UpdateResources(): done
+Main schema: sources: schema/schema.gql [520B] 
+Connector "example": sources: connectors/queries.gql [468B] 
+I0420 11:21:19.186302   39359 codegen.go:101] [connector "example" javascriptSdk] Generating sources into "/Users/ella/skild/src/dataconnect-generated"
+I0420 11:21:19.191784   39359 collector.go:107] schema extensions wrote into "/Users/ella/skild/dataconnect/.dataconnect/schema"
+Generated sources: main/relation.gql [6578B] prelude.gql [82799B] main/query.gql [2404B] main/mutation.gql [6444B] main/implicit.gql [266B] main/input.gql [16026B] 
+I0420 11:21:19.193527   39359 collector.go:107] connector "example" javascriptSdk wrote into "/Users/ella/skild/src/dataconnect-generated"
+Generated sources: esm/package.json [17B] index.cjs.js [1078B] react/index.d.ts [690B] index.d.ts [1661B] react/README.md [12918B] .guides/usage.md [1571B] esm/index.esm.js [948B] package.json [853B] react/esm/index.esm.js [581B] .guides/config.json [236B] README.md [8682B] react/package.json [460B] react/esm/package.json [17B] react/index.cjs.js [605B] .guides/setup.md [1682B] 
+I0420 11:21:19.195386   39359 installsdk.go:55] Package @dataconnect/generated is already installed. Skipping installation
+I0420 11:21:19.195615   39359 load.go:109] Finished reloading
+I0420 11:21:19.196327   39359 dev.go:104] Listening on address (HTTP + gRPC): 127.0.0.1:9399
+I0420 11:21:19.196428   39359 dev.go:104] Listening on address (HTTP + gRPC): [::1]:9399
+I0420 11:21:22.060405   39359 control.go:100] [projects/emulator/locations/emulator/services/skild-83e61-service 4ca7] UpdateResources(): done
+Main schema: sources: schema/schema.gql [520B] 
+Connector "example": sources: connectors/queries.gql [468B] 
+I0420 11:21:22.065221   39359 configure_emulator.go:21] ConfigureEmulator successed
+Request: service_id: "skild-83e61-service"
+connection_string: "postgres://127.0.0.1:5434/skild-83e61-database?sslmode=disable"
+database: "skild-83e61-database"
+
+Response: 
+I0420 11:21:47.807852   39359 execute.go:57] Database ping is quick (likely cached), took 1.468791ms
+I0420 11:21:47.851562   39359 engine.go:209] [projects/emulator/locations/emulator/services/skild-83e61-service 4ca7] ExecuteGraphql mutation : succeeded. 
